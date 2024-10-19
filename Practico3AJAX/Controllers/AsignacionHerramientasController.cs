@@ -19,6 +19,26 @@ namespace Practico3AJAX.Controllers
             _context = context;
         }
 
+        private async Task ReducirInventarioHerramienta(int unidadHerramientaId)
+        {
+            // Obtener la unidad de herramienta
+            var unidadHerramienta = await _context.UnidadHerramientas
+                .Include(u => u.Herramienta) // Incluir la herramienta relacionada
+                .FirstOrDefaultAsync(u => u.Id == unidadHerramientaId);
+
+            if (unidadHerramienta != null)
+            {
+                // Aquí asumimos que el campo Estado indica disponibilidad, actualizamos a "En uso"
+                unidadHerramienta.Estado = "En uso"; // Actualiza el estado de la unidad de herramienta
+
+                // Si tienes una cantidad disponible en la clase Herramienta, restar 1
+                // unidadHerramienta.Herramienta.CantidadDisponible--;
+
+                _context.Update(unidadHerramienta);
+                await _context.SaveChangesAsync();
+            }
+        }
+
         // GET: AsignacionHerramientas
         public async Task<IActionResult> Index()
         {
@@ -44,6 +64,13 @@ namespace Practico3AJAX.Controllers
             }
 
             return View(asignacionHerramienta);
+        }
+
+        public IActionResult Create()
+        {
+            ViewData["UnidadHerramientaId"] = new SelectList(_context.UnidadHerramientas, "Id", "Estado");
+            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "Id", "Email");
+            return View();
         }
 
         // GET: AsignacionHerramientas/Create
@@ -177,26 +204,6 @@ namespace Practico3AJAX.Controllers
         private bool AsignacionHerramientaExists(int id)
         {
             return (_context.AsignacionHerramientas?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
-
-        private async Task ReducirInventarioHerramienta(int unidadHerramientaId)
-        {
-            // Obtener la unidad de herramienta
-            var unidadHerramienta = await _context.UnidadHerramientas
-                .Include(u => u.Herramienta) // Incluir la herramienta relacionada
-                .FirstOrDefaultAsync(u => u.Id == unidadHerramientaId);
-
-            if (unidadHerramienta != null)
-            {
-                // Aquí asumimos que el campo Estado indica disponibilidad, actualizamos a "En uso"
-                unidadHerramienta.Estado = "En uso"; // Actualiza el estado de la unidad de herramienta
-
-                // Si tienes una cantidad disponible en la clase Herramienta, restar 1
-                // unidadHerramienta.Herramienta.CantidadDisponible--;
-
-                _context.Update(unidadHerramienta);
-                await _context.SaveChangesAsync();
-            }
         }
     }
 }
