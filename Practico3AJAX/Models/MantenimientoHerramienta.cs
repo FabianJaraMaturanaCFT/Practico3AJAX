@@ -9,11 +9,21 @@ namespace Practico3AJAX.Models
         public int Id { get; set; }
 
         [Required]
-        public int IdUnidadHerramienta { get; set; } 
+        [ForeignKey("UnidadHerramienta")]
+        public int IdUnidadHerramienta { get; set; }
+        public virtual UnidadHerramienta UnidadHerramienta { get; set; }  
 
         [Required]
-        public DateTime FechaInicio { get; set; }
+        public DateTime FechaInicio { get; set; }  
 
-        public DateTime? FechaFin { get; set; } 
+        public DateTime? FechaFin { get; set; }  
+
+        public EstadoMantenimiento EstadoMantenimiento { get; set; } = EstadoMantenimiento.EnMantencion;
+    }
+
+    public enum EstadoMantenimiento
+    {
+        EnMantencion,
+        MantencionFinalizada
     }
 }

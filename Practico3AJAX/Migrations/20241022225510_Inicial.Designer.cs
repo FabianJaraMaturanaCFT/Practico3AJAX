@@ -12,7 +12,7 @@ using Practico3AJAX.Data;
 namespace Practico3AJAX.Migrations
 {
     [DbContext(typeof(ProyectoDBContext))]
-    [Migration("20241022031348_Inicial")]
+    [Migration("20241022225510_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,10 +32,8 @@ namespace Practico3AJAX.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Estado")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("FechaAsignacion")
                         .HasColumnType("datetime2");
@@ -50,6 +48,10 @@ namespace Practico3AJAX.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdUnidadHerramienta");
+
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("AsignacionHerramientas");
                 });
@@ -67,11 +69,6 @@ namespace Practico3AJAX.Migrations
 
                     b.Property<int>("Disponibles")
                         .HasColumnType("int");
-
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("IdMarca")
                         .HasColumnType("int");
@@ -94,6 +91,9 @@ namespace Practico3AJAX.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("EstadoMantenimiento")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("FechaFin")
                         .HasColumnType("datetime2");
 
@@ -104,6 +104,8 @@ namespace Practico3AJAX.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdUnidadHerramienta");
 
                     b.ToTable("MantenimientoHerramientas");
                 });
@@ -134,10 +136,17 @@ namespace Practico3AJAX.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("Estado")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("FechaIngreso")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaMantencion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaRetornoBodega")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("IdModelo")
                         .HasColumnType("int");
@@ -148,6 +157,8 @@ namespace Practico3AJAX.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdModelo");
 
                     b.ToTable("UnidadHerramientas");
                 });
@@ -177,6 +188,52 @@ namespace Practico3AJAX.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("Practico3AJAX.Models.AsignacionHerramienta", b =>
+                {
+                    b.HasOne("Practico3AJAX.Models.UnidadHerramienta", "UnidadHerramienta")
+                        .WithMany()
+                        .HasForeignKey("IdUnidadHerramienta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Practico3AJAX.Models.Usuario", "Usuario")
+                        .WithMany("Asignaciones")
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UnidadHerramienta");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Practico3AJAX.Models.MantenimientoHerramienta", b =>
+                {
+                    b.HasOne("Practico3AJAX.Models.UnidadHerramienta", "UnidadHerramienta")
+                        .WithMany()
+                        .HasForeignKey("IdUnidadHerramienta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UnidadHerramienta");
+                });
+
+            modelBuilder.Entity("Practico3AJAX.Models.UnidadHerramienta", b =>
+                {
+                    b.HasOne("Practico3AJAX.Models.Herramienta", "Herramienta")
+                        .WithMany()
+                        .HasForeignKey("IdModelo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Herramienta");
+                });
+
+            modelBuilder.Entity("Practico3AJAX.Models.Usuario", b =>
+                {
+                    b.Navigation("Asignaciones");
                 });
 #pragma warning restore 612, 618
         }

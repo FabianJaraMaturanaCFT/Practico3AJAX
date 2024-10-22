@@ -9,18 +9,28 @@ namespace Practico3AJAX.Models
         public int Id { get; set; }
 
         [Required]
-        public int IdUnidadHerramienta { get; set; }  
+        [ForeignKey("UnidadHerramienta")]
+        public int IdUnidadHerramienta { get; set; }
+        public virtual UnidadHerramienta UnidadHerramienta { get; set; }  
 
         [Required]
-        public int IdUsuario { get; set; }  
+        [ForeignKey("Usuario")]
+        public int IdUsuario { get; set; }
+        public virtual Usuario Usuario { get; set; }  
 
         [Required]
-        public DateTime FechaAsignacion { get; set; }
+        public DateTime FechaAsignacion { get; set; }  
 
         public DateTime? FechaDevolucion { get; set; }  
 
         [Required]
-        [StringLength(50)]
-        public string Estado { get; set; }  
+        public EstadoAsignacion Estado { get; set; }  
+    }
+
+    // Enum para los posibles estados de la asignación
+    public enum EstadoAsignacion
+    {
+        Activa,
+        Devuelta
     }
 }

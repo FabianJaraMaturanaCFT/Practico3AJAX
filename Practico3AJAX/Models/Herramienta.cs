@@ -9,19 +9,17 @@ namespace Practico3AJAX.Models
 
         [Required]
         [StringLength(100)]
-        public string Modelo { get; set; }
+        public string Modelo { get; set; } 
 
         [Required]
         public int IdMarca { get; set; }  
 
         [Required]
-        public int CantidadTotal { get; set; }
+        public int CantidadTotal { get; set; }  
 
         [Required]
-        public int Disponibles { get; set; }
+        public int Disponibles { get; set; }  
 
-        [Required]
-        [StringLength(50)]
-        public string Estado { get; set; }
+        
     }
 }

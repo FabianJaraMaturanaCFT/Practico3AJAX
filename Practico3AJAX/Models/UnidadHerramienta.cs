@@ -13,10 +13,23 @@ namespace Practico3AJAX.Models
         public string NumeroSerie { get; set; } 
 
         [Required]
-        [StringLength(50)]
-        public string Estado { get; set; }  
+        public EstadoUnidad Estado { get; set; }  
 
-        [Required]
-        public int IdModelo { get; set; }  
+        // Relación con Herramienta (Foreign Key)
+        [ForeignKey("Herramienta")]
+        public int IdModelo { get; set; }
+        public virtual Herramienta Herramienta { get; set; }
+
+        public DateTime? FechaIngreso { get; set; }  
+        public DateTime? FechaRetornoBodega { get; set; }  
+        public DateTime? FechaMantencion { get; set; }  
+    }
+
+    // Enum para los posibles estados de la unidad
+    public enum EstadoUnidad
+    {
+        Disponible,
+        EnUso,
+        EnMantencion
     }
 }
