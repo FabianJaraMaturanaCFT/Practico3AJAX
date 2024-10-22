@@ -14,6 +14,7 @@ namespace Practico3AJAX.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<AsignacionHerramienta> AsignacionHerramientas { get; set; }
         public DbSet<MantenimientoHerramienta> MantenimientoHerramientas { get; set; }
+        public DbSet<Marca> Marcas { get; set; }
 
     }
 }

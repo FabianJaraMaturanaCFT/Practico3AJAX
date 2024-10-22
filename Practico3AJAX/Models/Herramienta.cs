@@ -4,6 +4,7 @@ namespace Practico3AJAX.Models
 {
     public class Herramienta
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -11,14 +12,16 @@ namespace Practico3AJAX.Models
         public string Modelo { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string Marca { get; set; }
+        public int IdMarca { get; set; }  
 
         [Required]
         public int CantidadTotal { get; set; }
 
+        [Required]
         public int Disponibles { get; set; }
 
-        public ICollection<UnidadHerramienta> Unidades { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Estado { get; set; }
     }
 }

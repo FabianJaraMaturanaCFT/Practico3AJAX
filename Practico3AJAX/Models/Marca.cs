@@ -2,7 +2,7 @@
 
 namespace Practico3AJAX.Models
 {
-    public class Usuario
+    public class Marca
     {
         [Key]
         public int Id { get; set; }
@@ -10,13 +10,5 @@ namespace Practico3AJAX.Models
         [Required]
         [StringLength(100)]
         public string Nombre { get; set; }
-
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Required]
-        [StringLength(15)]
-        public string Telefono { get; set; }
     }
 }

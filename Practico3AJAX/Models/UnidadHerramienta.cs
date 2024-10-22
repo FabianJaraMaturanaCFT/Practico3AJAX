@@ -5,17 +5,18 @@ namespace Practico3AJAX.Models
 {
     public class UnidadHerramienta
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string NumeroSerie { get; set; }
+        public string NumeroSerie { get; set; } 
 
         [Required]
-        public string Estado { get; set; } // disponible, en uso, en mantención
+        [StringLength(50)]
+        public string Estado { get; set; }  
 
-        [ForeignKey("Herramienta")]
-        public int HerramientaId { get; set; }
-        public Herramienta Herramienta { get; set; }
+        [Required]
+        public int IdModelo { get; set; }  
     }
 }

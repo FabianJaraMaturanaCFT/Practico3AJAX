@@ -30,6 +30,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=UnidadHerramientas}/{action=Index}/{id?}");
+    pattern: "{controller=AsignacionHerramientas}/{action=Index}/{id?}");
 
 app.Run();

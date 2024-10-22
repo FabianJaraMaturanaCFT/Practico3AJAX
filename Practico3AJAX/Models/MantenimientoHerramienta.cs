@@ -5,15 +5,15 @@ namespace Practico3AJAX.Models
 {
     public class MantenimientoHerramienta
     {
+        [Key]
         public int Id { get; set; }
 
-        [ForeignKey("UnidadHerramienta")]
-        public int UnidadHerramientaId { get; set; }
-        public UnidadHerramienta UnidadHerramienta { get; set; }
+        [Required]
+        public int IdUnidadHerramienta { get; set; } 
 
         [Required]
         public DateTime FechaInicio { get; set; }
 
-        public DateTime? FechaFin { get; set; }
+        public DateTime? FechaFin { get; set; } 
     }
 }
