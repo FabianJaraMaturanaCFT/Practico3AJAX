@@ -1,49 +1,57 @@
 ﻿@model Practico3AJAX.Models.Herramienta
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Herramienta";
 }
 
-<h1>Create</h1>
+<h1 class="text-center mb-4">Crear Herramienta</h1>
 
-<h4>Herramienta</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Modelo" class="control-label"></label>
-                <input asp-for="Modelo" class="form-control" />
-                <span asp-validation-for="Modelo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Marca" class="control-label"></label>
-                <input asp-for="Marca" class="form-control" />
-                <span asp-validation-for="Marca" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CantidadTotal" class="control-label"></label>
-                <input asp-for="CantidadTotal" class="form-control" />
-                <span asp-validation-for="CantidadTotal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Disponibles" class="control-label"></label>
-                <input asp-for="Disponibles" class="form-control" />
-                <span asp-validation-for="Disponibles" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Crear Herramienta" class="btn btn-primary" />
-            </div>
-        </form>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-16">
+            <form asp-action="Create" class="bg-light p-4 rounded shadow">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Modelo" class="form-label"></label>
+                    <input asp-for="Modelo" class="form-control" />
+                    <span asp-validation-for="Modelo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Marca" class="form-label"></label>
+                    <input asp-for="Marca" class="form-control" />
+                    <span asp-validation-for="Marca" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="CantidadTotal" class="form-label"></label>
+                    <input asp-for="CantidadTotal" class="form-control" type="number" min="0" />
+                    <span asp-validation-for="CantidadTotal" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="Disponibles" class="form-label"></label>
+                    <input asp-for="Disponibles" class="form-control" type="number" min="0" />
+                    <span asp-validation-for="Disponibles" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Crear Herramienta" class="btn btn-success w-100" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Volver a la Lista</a>
+<div class="text-center mt-4">
+    <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
