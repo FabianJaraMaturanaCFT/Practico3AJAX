@@ -13,11 +13,12 @@ namespace Practico3AJAX.Models
         public int IdUnidadHerramienta { get; set; }
         public virtual UnidadHerramienta UnidadHerramienta { get; set; }  
 
-        [Required]
+        [Required(ErrorMessage = "Las fechas son obligatorias.")]
         public DateTime FechaInicio { get; set; }  
 
-        public DateTime? FechaFin { get; set; }  
+        public DateTime? FechaFin { get; set; }
 
+        [Required(ErrorMessage = "El estado del mantenimiento es obligatorio.")]
         public EstadoMantenimiento EstadoMantenimiento { get; set; } = EstadoMantenimiento.EnMantencion;
     }
 

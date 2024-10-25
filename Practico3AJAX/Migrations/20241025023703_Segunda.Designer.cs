@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Practico3AJAX.Data;
 
@@ -11,9 +12,10 @@ using Practico3AJAX.Data;
 namespace Practico3AJAX.Migrations
 {
     [DbContext(typeof(ProyectoDBContext))]
-    partial class ProyectoDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241025023703_Segunda")]
+    partial class Segunda
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,63 +126,6 @@ namespace Practico3AJAX.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Marcas");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 3,
-                            Nombre = "Puma"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Nombre = "Bosch"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Nombre = "Makita"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Nombre = "Dewalt"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Nombre = "Stanley"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Nombre = "Black & Decker"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Nombre = "Hilti"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Nombre = "Hitachi"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Nombre = "Milwaukee"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Nombre = "Ryobi"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Nombre = "Craftsman"
-                        });
                 });
 
             modelBuilder.Entity("Practico3AJAX.Models.UnidadHerramienta", b =>
@@ -258,76 +203,6 @@ namespace Practico3AJAX.Migrations
                             Email = "AAA.12@gmail.com",
                             Nombre = "Edgar",
                             Telefono = "961145454"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Email = "ana.hernandez@gmail.com",
-                            Nombre = "Ana",
-                            Telefono = "961145111"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Email = "carlos.martinez@hotmail.com",
-                            Nombre = "Carlos",
-                            Telefono = "961142222"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Email = "lucia.gomez@yahoo.com",
-                            Nombre = "Lucia",
-                            Telefono = "961144333"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Email = "raul.rodriguez@outlook.com",
-                            Nombre = "Raul",
-                            Telefono = "961143444"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Email = "sofia.lopez@gmail.com",
-                            Nombre = "Sofia",
-                            Telefono = "961145555"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Email = "miguel.sanchez@hotmail.com",
-                            Nombre = "Miguel",
-                            Telefono = "961142666"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Email = "isabel.perez@gmail.com",
-                            Nombre = "Isabel",
-                            Telefono = "961144777"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Email = "andres.garcia@outlook.com",
-                            Nombre = "Andres",
-                            Telefono = "961143888"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Email = "marta.flores@yahoo.com",
-                            Nombre = "Marta",
-                            Telefono = "961145999"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Email = "javier.diaz@hotmail.com",
-                            Nombre = "Javier",
-                            Telefono = "961142000"
                         });
                 });
 

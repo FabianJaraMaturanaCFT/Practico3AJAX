@@ -8,22 +8,22 @@ namespace Practico3AJAX.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessage = "El nombre del usuario es obligatorio.")]
+        [StringLength(100, ErrorMessage = "El nombre del usuario no puede exceder los 100 caracteres.")]
         public string Nombre { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El correo del usuario es obligatorio.")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(15)]
+        [Required(ErrorMessage = "El telefono del usuario es obligatorio.")]
+        [StringLength(15, ErrorMessage = "El numero del usuario no puede exceder los 15 caracteres.")]
         [Phone]  
         public string Telefono { get; set; }
 
         public virtual ICollection<AsignacionHerramienta> Asignaciones { get; set; }
 
-        // Esta propiedad no es mapeada a la base de datos, pero ayuda a contar las herramientas en uso
+        
         [NotMapped]
         public int CantidadHerramientasAsignadas => Asignaciones?.Count(a => a.FechaDevolucion == null) ?? 0;
     }

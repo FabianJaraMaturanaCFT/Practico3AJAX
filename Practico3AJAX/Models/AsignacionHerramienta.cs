@@ -8,22 +8,22 @@ namespace Practico3AJAX.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo de unidad de herramienta es obligatorio.")]
         [ForeignKey("UnidadHerramienta")]
         public int IdUnidadHerramienta { get; set; }
         public virtual UnidadHerramienta UnidadHerramienta { get; set; }  
 
-        [Required]
+        [Required(ErrorMessage = "El correo del usuario es obligatorio.")]
         [ForeignKey("Usuario")]
         public int IdUsuario { get; set; }
         public virtual Usuario Usuario { get; set; }  
 
-        [Required]
+        [Required(ErrorMessage = "Las fechas son obligatorias.")]
         public DateTime FechaAsignacion { get; set; }  
 
         public DateTime? FechaDevolucion { get; set; }  
 
-        [Required]
+        [Required(ErrorMessage = "El estado de asignacion es obligatorio.")]
         public EstadoAsignacion Estado { get; set; }  
     }
 
