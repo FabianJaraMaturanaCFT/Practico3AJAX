@@ -49,6 +49,12 @@ namespace Practico3AJAX.Controllers
         public IActionResult Create()
         {
             ViewData["IdModelo"] = new SelectList(_context.Herramientas, "Id", "Modelo");
+
+            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(EstadoUnidad)).Cast<EstadoUnidad>().Select(e => new {
+                Value = (int)e,
+                Text = e.ToString()
+            }), "Value", "Text");
+
             return View();
         }
 
@@ -59,13 +65,52 @@ namespace Practico3AJAX.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NumeroSerie,Estado,IdModelo,FechaIngreso,FechaRetornoBodega,FechaMantencion")] UnidadHerramienta unidadHerramienta)
         {
+            
+            var numeroSerieExiste = await _context.UnidadHerramientas
+                .AnyAsync(uh => uh.NumeroSerie == unidadHerramienta.NumeroSerie);
+            if (numeroSerieExiste)
+            {
+                ModelState.AddModelError("NumeroSerie", "El número de serie ya está registrado.");
+            }
+
+            
+            var modeloExiste = await _context.Herramientas.AnyAsync(h => h.Id == unidadHerramienta.IdModelo);
+            if (!modeloExiste)
+            {
+                ModelState.AddModelError("IdModelo", "El modelo seleccionado no existe.");
+            }
+
+            
+            if (unidadHerramienta.FechaRetornoBodega.HasValue && unidadHerramienta.FechaRetornoBodega <= unidadHerramienta.FechaIngreso)
+            {
+                ModelState.AddModelError("FechaRetornoBodega", "La fecha de retorno a bodega debe ser posterior a la fecha de ingreso.");
+            }
+
+            if (unidadHerramienta.FechaMantencion.HasValue && unidadHerramienta.FechaMantencion <= unidadHerramienta.FechaIngreso)
+            {
+                ModelState.AddModelError("FechaMantencion", "La fecha de mantención debe ser posterior a la fecha de ingreso.");
+            }
+
+            
+            if (unidadHerramienta.Estado == default(EstadoUnidad))
+            {
+                ModelState.AddModelError("Estado", "El estado es obligatorio.");
+            }
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(unidadHerramienta);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["IdModelo"] = new SelectList(_context.Herramientas, "Id", "Modelo", unidadHerramienta.IdModelo);
+            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(EstadoUnidad)).Cast<EstadoUnidad>().Select(e => new {
+                Value = (int)e,
+                Text = e.ToString()
+            }), "Value", "Text");
+
             return View(unidadHerramienta);
         }
 
@@ -83,6 +128,12 @@ namespace Practico3AJAX.Controllers
                 return NotFound();
             }
             ViewData["IdModelo"] = new SelectList(_context.Herramientas, "Id", "Modelo", unidadHerramienta.IdModelo);
+
+            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(EstadoUnidad)).Cast<EstadoUnidad>().Select(e => new {
+                Value = (int)e,
+                Text = e.ToString()
+            }), "Value", "Text");
+
             return View(unidadHerramienta);
         }
 
@@ -96,6 +147,38 @@ namespace Practico3AJAX.Controllers
             if (id != unidadHerramienta.Id)
             {
                 return NotFound();
+            }
+
+            
+            var numeroSerieExiste = await _context.UnidadHerramientas
+                .AnyAsync(uh => uh.NumeroSerie == unidadHerramienta.NumeroSerie && uh.Id != unidadHerramienta.Id);
+            if (numeroSerieExiste)
+            {
+                ModelState.AddModelError("NumeroSerie", "El número de serie ya está registrado.");
+            }
+
+            
+            var modeloExiste = await _context.Herramientas.AnyAsync(h => h.Id == unidadHerramienta.IdModelo);
+            if (!modeloExiste)
+            {
+                ModelState.AddModelError("IdModelo", "El modelo seleccionado no existe.");
+            }
+
+            
+            if (unidadHerramienta.FechaRetornoBodega.HasValue && unidadHerramienta.FechaRetornoBodega <= unidadHerramienta.FechaIngreso)
+            {
+                ModelState.AddModelError("FechaRetornoBodega", "La fecha de retorno a bodega debe ser posterior a la fecha de ingreso.");
+            }
+
+            if (unidadHerramienta.FechaMantencion.HasValue && unidadHerramienta.FechaMantencion <= unidadHerramienta.FechaIngreso)
+            {
+                ModelState.AddModelError("FechaMantencion", "La fecha de mantención debe ser posterior a la fecha de ingreso.");
+            }
+
+            
+            if (unidadHerramienta.Estado == default(EstadoUnidad))
+            {
+                ModelState.AddModelError("Estado", "El estado es obligatorio.");
             }
 
             if (ModelState.IsValid)
@@ -118,6 +201,7 @@ namespace Practico3AJAX.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["IdModelo"] = new SelectList(_context.Herramientas, "Id", "Modelo", unidadHerramienta.IdModelo);
             return View(unidadHerramienta);
         }

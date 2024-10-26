@@ -24,7 +24,7 @@ namespace Practico3AJAX.Models
 
     public enum EstadoMantenimiento
     {
-        EnMantencion,
-        MantencionFinalizada
+        EnMantencion = 1,
+        MantencionFinalizada = 2
     }
 }

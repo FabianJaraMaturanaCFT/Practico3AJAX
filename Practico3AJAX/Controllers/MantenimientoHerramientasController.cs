@@ -49,6 +49,12 @@ namespace Practico3AJAX.Controllers
         public IActionResult Create()
         {
             ViewData["IdUnidadHerramienta"] = new SelectList(_context.UnidadHerramientas, "Id", "NumeroSerie");
+
+            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(EstadoMantenimiento)).Cast<EstadoMantenimiento>().Select(e => new {
+                Value = (int)e,
+                Text = e.ToString()
+            }), "Value", "Text");
+
             return View();
         }
 
@@ -66,6 +72,12 @@ namespace Practico3AJAX.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdUnidadHerramienta"] = new SelectList(_context.UnidadHerramientas, "Id", "NumeroSerie", mantenimientoHerramienta.IdUnidadHerramienta);
+
+            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(EstadoMantenimiento)).Cast<EstadoMantenimiento>().Select(e => new {
+                Value = (int)e,
+                Text = e.ToString()
+            }), "Value", "Text");
+
             return View(mantenimientoHerramienta);
         }
 
@@ -119,6 +131,12 @@ namespace Practico3AJAX.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdUnidadHerramienta"] = new SelectList(_context.UnidadHerramientas, "Id", "NumeroSerie", mantenimientoHerramienta.IdUnidadHerramienta);
+
+            ViewData["Estado"] = new SelectList(Enum.GetValues(typeof(EstadoMantenimiento)).Cast<EstadoMantenimiento>().Select(e => new {
+                Value = (int)e,
+                Text = e.ToString()
+            }), "Value", "Text");
+
             return View(mantenimientoHerramienta);
         }
 

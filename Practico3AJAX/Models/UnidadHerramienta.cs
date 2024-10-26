@@ -8,29 +8,33 @@ namespace Practico3AJAX.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "El numero de serie es obligatorio.")]
-        [StringLength(50, ErrorMessage = "El numero de serie no puede exceder los 50 caracteres.")]
+        [Required(ErrorMessage = "El número de serie es obligatorio.")]
+        [StringLength(50, ErrorMessage = "El número de serie no puede exceder los 50 caracteres.")]
         public string NumeroSerie { get; set; }
 
-        [Required(ErrorMessage = "El campo del estado de la unidad es obligatorio.")]
-        public EstadoUnidad Estado { get; set; }  
+        [Required(ErrorMessage = "El estado de la unidad es obligatorio.")]
+        public EstadoUnidad Estado { get; set; }
 
-        // Relación con Herramienta (Foreign Key)
+        [Required(ErrorMessage = "El modelo de la herramienta es obligatorio.")]
         [ForeignKey("Herramienta")]
         public int IdModelo { get; set; }
         public virtual Herramienta Herramienta { get; set; }
 
-        [Required(ErrorMessage = "Las fechas son obligatorias.")]
-        public DateTime? FechaIngreso { get; set; }  
-        public DateTime? FechaRetornoBodega { get; set; }  
-        public DateTime? FechaMantencion { get; set; }  
+        [Required(ErrorMessage = "La fecha de ingreso es obligatoria.")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime FechaIngreso { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? FechaRetornoBodega { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? FechaMantencion { get; set; }
     }
 
-    // Enum para los posibles estados de la unidad
     public enum EstadoUnidad
     {
-        Disponible,
-        EnUso,
-        EnMantencion
+        Disponible = 1,
+        EnUso = 2,
+        EnMantencion = 3
     }
 }

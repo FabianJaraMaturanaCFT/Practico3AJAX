@@ -11,26 +11,29 @@ namespace Practico3AJAX.Models
         [Required(ErrorMessage = "El campo de unidad de herramienta es obligatorio.")]
         [ForeignKey("UnidadHerramienta")]
         public int IdUnidadHerramienta { get; set; }
-        public virtual UnidadHerramienta UnidadHerramienta { get; set; }  
+        public virtual UnidadHerramienta UnidadHerramienta { get; set; }
 
         [Required(ErrorMessage = "El correo del usuario es obligatorio.")]
         [ForeignKey("Usuario")]
         public int IdUsuario { get; set; }
-        public virtual Usuario Usuario { get; set; }  
+        public virtual Usuario Usuario { get; set; }
 
-        [Required(ErrorMessage = "Las fechas son obligatorias.")]
-        public DateTime FechaAsignacion { get; set; }  
+        [Required(ErrorMessage = "La fecha de asignación es obligatoria.")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime FechaAsignacion { get; set; }
 
-        public DateTime? FechaDevolucion { get; set; }  
+        
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? FechaDevolucion { get; set; }
 
-        [Required(ErrorMessage = "El estado de asignacion es obligatorio.")]
-        public EstadoAsignacion Estado { get; set; }  
+        [Required(ErrorMessage = "El estado de asignación es obligatorio.")]
+        public EstadoAsignacion Estado { get; set; }
     }
 
-    // Enum para los posibles estados de la asignación
     public enum EstadoAsignacion
     {
-        Activa,
-        Devuelta
+        Pendiente = 1,
+        Activa = 2,
+        Finalizada = 3
     }
 }
