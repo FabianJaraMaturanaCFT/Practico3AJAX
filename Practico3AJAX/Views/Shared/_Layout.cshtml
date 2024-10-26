@@ -11,19 +11,19 @@
         body, html {
             height: 100%;
             margin: 0;
-            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%); /* Fondo degradado verde claro */
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
         }
 
         .container {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Centra verticalmente el contenido */
-            align-items: center; /* Centra horizontalmente el contenido */
+            justify-content: center;
+            align-items: center;
         }
 
         footer {
-            background-color: rgba(255, 255, 255, 0.8); /* Fondo del pie de página más claro */
+            background-color: rgba(255, 255, 255, 0.8);
         }
     </style>
 </head>
@@ -40,6 +40,21 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AsignacionHerramientas" asp-action="Index">Asignación Herramientas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Herramientas" asp-action="Index">Herramientas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MantenimientoHerramientas" asp-action="Index">Mantenimiento Herramientas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="UnidadHerramientas" asp-action="Index">Unidad Herramientas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

@@ -1,48 +1,54 @@
 ﻿@model IEnumerable<Practico3AJAX.Models.Usuario>
 
 @{
-    ViewData["Title"] = "Usuarios";
+    ViewData["Title"] = "Gestión de Usuarios";
 }
 
-<h1 class="mb-4">Gestión de Usuarios</h1>
+<h1 class="text-center mb-4">Gestión de Usuarios</h1>
 
-<p>
-    <a class="btn btn-success mb-3" asp-action="Create">
-        <i class="fas fa-plus"></i> Crear Nuevo Usuario
-    </a>
-</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-16">
+            <p>
+                <a class="btn btn-success mb-3" asp-action="Create">
+                    <i class="fas fa-plus"></i> Crear Nuevo Usuario
+                </a>
+            </p>
 
-<table class="table table-striped table-hover table-bordered">
-    <thead class="thead-dark">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
-            <th>@Html.DisplayNameFor(model => model.Email)</th>
-            <th>@Html.DisplayNameFor(model => model.Telefono)</th>
-            <th class="text-center">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
-                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
-                <td class="text-center">
-                    <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id" title="Editar">
-                        <i class="fas fa-edit"></i> Editar
-                    </a>
-                    <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@item.Id" title="Detalles">
-                        <i class="fas fa-info-circle"></i> Detalles
-                    </a>
-                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id" title="Eliminar">
-                        <i class="fas fa-trash"></i> Eliminar
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <table class="table table-hover shadow-lg" style="border-radius: 10px; overflow: hidden;">
+                <thead style="background-color: #6c7ae0; color: white;">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                        <th>@Html.DisplayNameFor(model => model.Email)</th>
+                        <th>@Html.DisplayNameFor(model => model.Telefono)</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="background-color: #f1f5fc;">
+                            <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
+                            <td class="text-center">
+                                <a class="btn btn-primary btn-sm mx-1" asp-action="Edit" asp-route-id="@item.Id" title="Editar">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                                <a class="btn btn-info btn-sm mx-1" asp-action="Details" asp-route-id="@item.Id" title="Detalles">
+                                    <i class="fas fa-info-circle"></i> Detalles
+                                </a>
+                                <a class="btn btn-danger btn-sm mx-1" asp-action="Delete" asp-route-id="@item.Id" title="Eliminar">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <!-- Incluir FontAwesome y Bootstrap para los iconos y estilos si no están incluidos -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
