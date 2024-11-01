@@ -1,0 +1,148 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Practico3AJAX</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f4f6f9; /* Similar background to the reference */
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .navbar {
+            background-color: #004080; /* Azul oscuro similar al portal */
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+        }
+
+        .nav-link {
+            color: #ddd !important;
+            font-size: 1.1em;
+        }
+
+            .nav-link:hover {
+                color: #fff !important;
+                background-color: #003366; /* Efecto hover similar */
+            }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1; /* Hace que el contenido crezca y mantenga el footer al fondo */
+        }
+
+        footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            padding: 1rem 0;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+            footer a {
+                color: #f8f9fa;
+                text-decoration: none;
+            }
+
+                footer a:hover {
+                    text-decoration: underline;
+                }
+
+        /* Custom button styles */
+        .btn-primary {
+            background-color: #004080;
+            border-color: #004080;
+        }
+
+            .btn-primary:hover {
+                background-color: #003366;
+                border-color: #003366;
+            }
+    </style>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Practico3AJAX</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Marcas" asp-action="Index">Marcas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Herramientas" asp-action="Index">Herramientas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="UnidadHerramientas" asp-action="Index">Unidades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="AsignacionHerramientas" asp-action="Index">Asignaciones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="MantenimientoHerramientas" asp-action="Index">Mantenimientos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            &copy; 2024 - Practico3AJAX - <a asp-area="" asp-controller="Home" asp-action="Privacy">Política de Privacidad</a>
+        </div>
+    </footer>
+
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
