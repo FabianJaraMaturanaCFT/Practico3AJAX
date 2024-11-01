@@ -1,0 +1,36 @@
+﻿@model EVA3AJAX.Models.UnidadHerramienta
+@{
+    ViewData["Title"] = "Eliminar";
+}
+<h1>Eliminar Unidad de Herramienta</h1>
+<h3>¿Estás seguro de que deseas eliminar esta unidad?</h3>
+<div>
+    <h4>Unidad de Herramienta</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumeroSerie)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumeroSerie)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HerramientaId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HerramientaId)
+        </dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
+    </form>
+</div>
+

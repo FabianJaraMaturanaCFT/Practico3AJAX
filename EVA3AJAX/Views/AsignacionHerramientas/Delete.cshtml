@@ -1,0 +1,35 @@
+﻿@model EVA3AJAX.Models.AsignacionHerramienta
+@{
+    ViewData["Title"] = "Eliminar";
+}
+<h1>Eliminar Asignación</h1>
+<h3>¿Estás seguro de que deseas eliminar esta asignación?</h3>
+<div>
+    <h4>Asignación de Herramienta</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Unidad de Herramienta
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UnidadHerramientaId)
+        </dd>
+        <dt class="col-sm-2">
+            Usuario
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UsuarioId)
+        </dd>
+        <dt class="col-sm-2">
+            Fecha de Asignación
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaAsignacion)
+        </dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
+    </form>
+</div>
