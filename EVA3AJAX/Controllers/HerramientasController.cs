@@ -22,7 +22,8 @@ namespace EVA3AJAX.Controllers
         // GET: Herramientas
         public async Task<IActionResult> Index()
         {
-              return _context.Herramientas != null ? 
+            ViewData["ActivePage"] = "Herramientas";
+            return _context.Herramientas != null ? 
                           View(await _context.Herramientas.ToListAsync()) :
                           Problem("Entity set 'ProyectoDBContext.Herramientas'  is null.");
         }
@@ -30,6 +31,7 @@ namespace EVA3AJAX.Controllers
         // GET: Herramientas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewData["ActivePage"] = "Herramientas";
             if (id == null || _context.Herramientas == null)
             {
                 return NotFound();
@@ -48,6 +50,7 @@ namespace EVA3AJAX.Controllers
         // GET: Herramientas/Create
         public IActionResult Create()
         {
+            ViewData["ActivePage"] = "Herramientas";
             ViewBag.Marcas = new SelectList(_context.Marcas, "Id", "Nombre");
             return View();
         }
@@ -73,6 +76,7 @@ namespace EVA3AJAX.Controllers
         // GET: Herramientas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["ActivePage"] = "Herramientas";
             if (id == null || _context.Herramientas == null)
             {
                 return NotFound();
@@ -125,6 +129,7 @@ namespace EVA3AJAX.Controllers
         // GET: Herramientas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewData["ActivePage"] = "Herramientas";
             if (id == null || _context.Herramientas == null)
             {
                 return NotFound();

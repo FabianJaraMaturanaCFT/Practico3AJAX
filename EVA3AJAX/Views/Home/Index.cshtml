@@ -2,7 +2,46 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero">
+    <div class="text-center">
+        <h1 class="display-4 text-light" style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);">Bienvenido a la Gestión de Herramientas</h1>
+        <p class="lead text-light" style="text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);">Aprende sobre <a href="https://docs.microsoft.com/aspnet/core" class="text-warning font-weight-bold">desarrollo de aplicaciones web con ASP.NET Core</a>.</p>
+        <a href="@Url.Action("Index", "Marcas")" class="btn btn-warning btn-lg mt-4" style="color: white; background-color: #FFC107; border-color: #FFC107; padding: 10px 30px;">Ver Marcas</a>
+    </div>
 </div>
+
+<style>
+    .hero {
+        background-image: url('@Url.Content("~/images/Inicio.jpg")');
+        background-size: cover;
+        background-position: top center;
+        height: calc(100vh);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        position: relative;
+        margin-bottom: 60px; 
+    }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hero > div {
+            position: relative;
+            z-index: 2;
+        }
+
+    .text-warning {
+        color: #FFC107;
+    }
+</style>

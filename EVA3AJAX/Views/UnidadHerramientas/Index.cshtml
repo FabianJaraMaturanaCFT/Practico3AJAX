@@ -1,45 +1,38 @@
 ﻿@model IEnumerable<EVA3AJAX.Models.UnidadHerramienta>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Módulo de Unidades";
 }
-<h1>Modulo de Unidades</h1>
+
+<h1 class="text-primary">Módulo de Unidades</h1>
 <p>
-    <a asp-action="Create" class="btn btn-primary">Crear Nueva Unidad</a>
+    <a asp-action="Create" class="btn btn-info mb-3">Crear Nueva Unidad</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Número de Serie
-            </th>
-            <th>
-                Estado 
-            </th>
-            <th>
-                ID de Herramienta 
-            </th>
-            <th style="text-align: center;">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumeroSerie)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HerramientaId)
-                </td>
-                <td style="text-align: center;">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
-                </td>
+                <th>Número de Serie</th>
+                <th>Estado</th>
+                <th>ID de Herramienta</th>
+                <th style="text-align: center;">Acciones</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.NumeroSerie)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Estado)</td>
+                    <td>@Html.DisplayFor(modelItem => item.HerramientaId)</td>
+                    <td style="text-align: center;">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

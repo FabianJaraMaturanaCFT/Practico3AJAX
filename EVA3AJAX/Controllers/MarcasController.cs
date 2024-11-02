@@ -22,7 +22,8 @@ namespace EVA3AJAX.Controllers
         // GET: Marcas
         public async Task<IActionResult> Index()
         {
-              return _context.Marcas != null ? 
+            ViewData["ActivePage"] = "Marcas";
+            return _context.Marcas != null ? 
                           View(await _context.Marcas.ToListAsync()) :
                           Problem("Entity set 'ProyectoDBContext.Marcas'  is null.");
         }
@@ -30,6 +31,7 @@ namespace EVA3AJAX.Controllers
         // GET: Marcas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewData["ActivePage"] = "Marcas";
             if (id == null || _context.Marcas == null)
             {
                 return NotFound();
@@ -48,6 +50,7 @@ namespace EVA3AJAX.Controllers
         // GET: Marcas/Create
         public IActionResult Create()
         {
+            ViewData["ActivePage"] = "Marcas";
             return View();
         }
 
@@ -70,6 +73,7 @@ namespace EVA3AJAX.Controllers
         // GET: Marcas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["ActivePage"] = "Marcas";
             if (id == null || _context.Marcas == null)
             {
                 return NotFound();
@@ -121,6 +125,7 @@ namespace EVA3AJAX.Controllers
         // GET: Marcas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewData["ActivePage"] = "Marcas";
             if (id == null || _context.Marcas == null)
             {
                 return NotFound();

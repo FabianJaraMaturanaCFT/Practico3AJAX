@@ -22,7 +22,8 @@ namespace EVA3AJAX.Controllers
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-              return _context.Usuarios != null ? 
+            ViewData["ActivePage"] = "Usuarios";
+            return _context.Usuarios != null ? 
                           View(await _context.Usuarios.ToListAsync()) :
                           Problem("Entity set 'ProyectoDBContext.Usuarios'  is null.");
         }
@@ -30,6 +31,7 @@ namespace EVA3AJAX.Controllers
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewData["ActivePage"] = "Usuarios";
             if (id == null || _context.Usuarios == null)
             {
                 return NotFound();
@@ -48,6 +50,7 @@ namespace EVA3AJAX.Controllers
         // GET: Usuarios/Create
         public IActionResult Create()
         {
+            ViewData["ActivePage"] = "Usuarios";
             return View();
         }
 
@@ -70,6 +73,7 @@ namespace EVA3AJAX.Controllers
         // GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["ActivePage"] = "Usuarios";
             if (id == null || _context.Usuarios == null)
             {
                 return NotFound();
@@ -121,6 +125,7 @@ namespace EVA3AJAX.Controllers
         // GET: Usuarios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewData["ActivePage"] = "Usuarios";
             if (id == null || _context.Usuarios == null)
             {
                 return NotFound();

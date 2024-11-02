@@ -22,14 +22,17 @@ namespace EVA3AJAX.Controllers
         // GET: AsignacionHerramientas
         public async Task<IActionResult> Index()
         {
-              return _context.AsignacionHerramientas != null ? 
-                          View(await _context.AsignacionHerramientas.ToListAsync()) :
-                          Problem("Entity set 'ProyectoDBContext.AsignacionHerramientas'  is null.");
+            ViewData["ActivePage"] = "AsignacionHerramientas"; 
+            return _context.AsignacionHerramientas != null ?
+                View(await _context.AsignacionHerramientas.ToListAsync()) :
+                Problem("Entity set 'ProyectoDBContext.AsignacionHerramientas' is null.");
         }
+
 
         // GET: AsignacionHerramientas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewData["ActivePage"] = "AsignacionHerramientas";
             if (id == null || _context.AsignacionHerramientas == null)
             {
                 return NotFound();
@@ -48,6 +51,7 @@ namespace EVA3AJAX.Controllers
         // GET: AsignacionHerramientas/Create
         public IActionResult Create()
         {
+            ViewData["ActivePage"] = "AsignacionHerramientas";
             ViewBag.UnidadHerramientas = new SelectList(_context.UnidadHerramientas, "Id", "NumeroSerie");
             ViewBag.Usuarios = new SelectList(_context.Usuarios, "Id", "Nombre");
             return View();
@@ -74,6 +78,7 @@ namespace EVA3AJAX.Controllers
         // GET: AsignacionHerramientas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["ActivePage"] = "AsignacionHerramientas";
             if (id == null || _context.AsignacionHerramientas == null)
             {
                 return NotFound();
@@ -127,6 +132,7 @@ namespace EVA3AJAX.Controllers
         // GET: AsignacionHerramientas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewData["ActivePage"] = "AsignacionHerramientas";
             if (id == null || _context.AsignacionHerramientas == null)
             {
                 return NotFound();

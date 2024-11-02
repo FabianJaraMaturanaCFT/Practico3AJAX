@@ -2,30 +2,20 @@
 @{
     ViewData["Title"] = "Detalles";
 }
-<h1>Detalles de la Asignación de Herramienta</h1>
-<div>
-    <h4>Asignación de Herramienta</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Unidad de Herramienta
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UnidadHerramientaId)
-        </dd>
-        <dt class="col-sm-2">
-            Usuario
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UsuarioId)
-        </dd>
-        <dt class="col-sm-2">
-            Fecha de Asignación
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FechaAsignacion)
-        </dd>
-    </dl>
+<h1 class="text-primary">Detalles de la Asignación de Herramienta</h1>
+<div class="card mb-4">
+    <div class="card-body">
+        <h4>Asignación de Herramienta</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">Unidad de Herramienta</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.UnidadHerramientaId)</dd>
+            <dt class="col-sm-2">ID de Usuario</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.UsuarioId)</dd>
+            <dt class="col-sm-2">Fecha de Asignación</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.FechaAsignacion)</dd>
+        </dl>
+    </div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Editar</a> |

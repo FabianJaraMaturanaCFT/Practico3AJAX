@@ -22,7 +22,8 @@ namespace EVA3AJAX.Controllers
         // GET: UnidadHerramientas
         public async Task<IActionResult> Index()
         {
-              return _context.UnidadHerramientas != null ? 
+            ViewData["ActivePage"] = "UnidadHerramientas";
+            return _context.UnidadHerramientas != null ? 
                           View(await _context.UnidadHerramientas.ToListAsync()) :
                           Problem("Entity set 'ProyectoDBContext.UnidadHerramientas'  is null.");
         }
@@ -30,6 +31,7 @@ namespace EVA3AJAX.Controllers
         // GET: UnidadHerramientas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewData["ActivePage"] = "UnidadHerramientas";
             if (id == null || _context.UnidadHerramientas == null)
             {
                 return NotFound();
@@ -48,6 +50,7 @@ namespace EVA3AJAX.Controllers
         // GET: UnidadHerramientas/Create
         public IActionResult Create()
         {
+            ViewData["ActivePage"] = "UnidadHerramientas";
             ViewBag.Herramientas = new SelectList(_context.Herramientas, "Id", "Modelo");
             return View();
         }
@@ -72,6 +75,7 @@ namespace EVA3AJAX.Controllers
         // GET: UnidadHerramientas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["ActivePage"] = "UnidadHerramientas";
             if (id == null || _context.UnidadHerramientas == null)
             {
                 return NotFound();
@@ -124,6 +128,7 @@ namespace EVA3AJAX.Controllers
         // GET: UnidadHerramientas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewData["ActivePage"] = "UnidadHerramientas";
             if (id == null || _context.UnidadHerramientas == null)
             {
                 return NotFound();

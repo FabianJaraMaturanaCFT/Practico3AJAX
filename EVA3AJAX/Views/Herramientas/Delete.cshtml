@@ -2,41 +2,27 @@
 @{
     ViewData["Title"] = "Eliminar";
 }
-<h1>Eliminar Herramienta</h1>
+<h1 class="text-danger">Eliminar Herramienta</h1>
 <h3>¿Estás seguro de que deseas eliminar esta herramienta?</h3>
-<div>
-    <h4>Herramienta</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Modelo
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Modelo)
-        </dd>
-        <dt class="col-sm-2">
-            Marca
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IdMarca)
-        </dd>
-        <dt class="col-sm-2">
-            Cantidad Total
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CantidadTotal)
-        </dd>
-        <dt class="col-sm-2">
-            Disponibles
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Disponibles)
-        </dd>
-    </dl>
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-        <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
-    </form>
+<div class="card mb-4">
+    <div class="card-body">
+        <h4>Detalles de la Herramienta</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">Modelo</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.Modelo)</dd>
+            <dt class="col-sm-2">ID de la Marca</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.IdMarca)</dd>
+            <dt class="col-sm-2">Cantidad Total</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.CantidadTotal)</dd>
+            <dt class="col-sm-2">Disponibles</dt>
+            <dd class="col-sm-10">@Html.DisplayFor(model => model.Disponibles)</dd>
+        </dl>
+    </div>
 </div>
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+    <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
+</form>
 

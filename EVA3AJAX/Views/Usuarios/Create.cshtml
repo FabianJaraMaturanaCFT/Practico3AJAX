@@ -2,37 +2,35 @@
 @{
     ViewData["Title"] = "Crear";
 }
-<h1>Crear Usuario</h1>
+
+<h1 class="text-primary">Crear Nuevo Usuario</h1>
 <h4>Usuario</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-4 offset-md-4">
+        <form asp-action="Create" class="p-4 border rounded shadow">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="Nombre" class="control-label">Nombre</label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label">Correo Electrónico</label> 
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="control-label">Correo Electrónico</label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Telefono" class="control-label">Teléfono</label> 
+            <div class="form-group mb-3">
+                <label asp-for="Telefono" class="control-label">Teléfono</label>
                 <input asp-for="Telefono" class="form-control" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
-            <br />
             <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" /> 
+                <input type="submit" value="Crear" class="btn btn-primary" /> |
+                <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
             </div>
         </form>
     </div>
-</div>
-<div>
-    <a asp-action="Index">Volver a la Lista</a>
 </div>
 @section Scripts {
     @{

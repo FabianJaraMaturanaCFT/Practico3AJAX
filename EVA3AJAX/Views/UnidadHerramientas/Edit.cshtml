@@ -2,29 +2,28 @@
 @{
     ViewData["Title"] = "Editar";
 }
-<h1>Editar Unidad de Herramienta</h1>
+<h1 class="text-primary">Editar Unidad de Herramienta</h1>
 <h4>Detalles de la Unidad</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md-4 offset-md-4">
+        <form asp-action="Edit" class="p-4 border rounded shadow">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="NumeroSerie" class="control-label">Número de Serie</label>
                 <input asp-for="NumeroSerie" class="form-control" />
                 <span asp-validation-for="NumeroSerie" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="Estado" class="control-label">Estado</label>
                 <input asp-for="Estado" class="form-control" />
                 <span asp-validation-for="Estado" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="HerramientaId" class="control-label">Herramienta</label>
                 <select asp-for="HerramientaId" class="form-control" asp-items="ViewBag.Herramientas"></select>
             </div>
-            <br />
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" /> |
                 <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
@@ -37,3 +36,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
