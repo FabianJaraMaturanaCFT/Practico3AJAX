@@ -20,12 +20,19 @@ namespace EVA3AJAX.Controllers
         }
 
         // GET: Marcas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
             ViewData["ActivePage"] = "Marcas";
-            return _context.Marcas != null ? 
-                          View(await _context.Marcas.ToListAsync()) :
-                          Problem("Entity set 'ProyectoDBContext.Marcas'  is null.");
+            var marcas = from m in _context.Marcas
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                marcas = marcas.Where(m => m.Nombre.Contains(searchString));
+            }
+
+            ViewData["CurrentFilter"] = searchString; 
+            return View(await marcas.ToListAsync());
         }
 
         // GET: Marcas/Details/5

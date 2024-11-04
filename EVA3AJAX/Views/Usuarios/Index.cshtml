@@ -2,10 +2,21 @@
 @{
     ViewData["Title"] = "Módulo de Usuarios";
 }
+
 <h1 class="text-primary">Módulo de Usuarios</h1>
 <p>
     <a asp-action="Create" class="btn btn-info mb-3">Crear Nuevo Usuario</a>
 </p>
+
+<form method="get">
+    <div class="input-group mb-3">
+        <input type="text" name="searchString" class="form-control" placeholder="Buscar por nombre o correo..." value="@ViewData["CurrentFilter"]" />
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+        </div>
+    </div>
+</form>
+
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
@@ -33,5 +44,4 @@
         </tbody>
     </table>
 </div>
-
 

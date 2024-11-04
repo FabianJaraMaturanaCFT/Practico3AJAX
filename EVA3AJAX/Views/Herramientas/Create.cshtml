@@ -16,7 +16,9 @@
             </div>
             <div class="form-group mb-3">
                 <label asp-for="IdMarca" class="control-label">Marca</label>
-                <select asp-for="IdMarca" class="form-control" asp-items="ViewBag.Marcas"></select>
+                <select asp-for="IdMarca" class="form-control" asp-items="ViewBag.Marcas">
+                    <option value="" selected>Seleccionar Marca</option>
+                </select>
                 <span asp-validation-for="IdMarca" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">

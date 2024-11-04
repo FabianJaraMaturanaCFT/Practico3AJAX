@@ -5,6 +5,22 @@
 <h1 class="text-primary">Módulo de Asignaciones</h1>
 <p>
     <a asp-action="Create" class="btn btn-info mb-3">Nueva Asignación</a>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div id="successMessage" class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+
+        <script>
+            setTimeout(function() {
+                var msg = document.getElementById('successMessage');
+                if (msg) {
+                    msg.style.display = 'none';
+                }
+            }, 5000);
+        </script>
+    }
 </p>
 <div class="table-responsive">
     <table class="table table-bordered table-hover">

@@ -21,5 +21,8 @@ namespace EVA3AJAX.Models
         [Required(ErrorMessage = "La fecha de asignación es requerida.")]
         public DateTime FechaAsignacion { get; set; }
 
+
+        //public ICollection<UnidadHerramienta> UnidadHerramientas { get; set; }
+
     }
 }

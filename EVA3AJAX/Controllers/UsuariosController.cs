@@ -20,12 +20,20 @@ namespace EVA3AJAX.Controllers
         }
 
         // GET: Usuarios
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
             ViewData["ActivePage"] = "Usuarios";
-            return _context.Usuarios != null ? 
-                          View(await _context.Usuarios.ToListAsync()) :
-                          Problem("Entity set 'ProyectoDBContext.Usuarios'  is null.");
+
+            var usuarios = from u in _context.Usuarios
+                           select u;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                usuarios = usuarios.Where(u => u.Nombre.Contains(searchString) || u.Email.Contains(searchString));
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            return View(await usuarios.ToListAsync());
         }
 
         // GET: Usuarios/Details/5
@@ -99,6 +107,14 @@ namespace EVA3AJAX.Controllers
                 return NotFound();
             }
 
+            
+            var herramientasEnUso = await usuario.HerramientasEnUso(_context);
+            if (herramientasEnUso > 0)
+            {
+                ModelState.AddModelError("", "No se puede editar el usuario porque tiene herramientas en uso.");
+                return View(usuario);
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -122,6 +138,7 @@ namespace EVA3AJAX.Controllers
             return View(usuario);
         }
 
+
         // GET: Usuarios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -141,21 +158,24 @@ namespace EVA3AJAX.Controllers
             return View(usuario);
         }
 
-        // POST: Usuarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Usuarios == null)
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == id);
+            if (usuario == null)
             {
-                return Problem("Entity set 'ProyectoDBContext.Usuarios'  is null.");
+                return NotFound();
             }
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario != null)
+
+            var herramientasEnUso = await usuario.HerramientasEnUso(_context);
+            if (herramientasEnUso > 0)
             {
-                _context.Usuarios.Remove(usuario);
+                ModelState.AddModelError("", "No se puede eliminar el usuario porque tiene herramientas en uso.");
+                return View(usuario);
             }
-            
+
+            _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

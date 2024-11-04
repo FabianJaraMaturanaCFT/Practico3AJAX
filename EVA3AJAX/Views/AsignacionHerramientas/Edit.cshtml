@@ -12,19 +12,35 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group mb-3">
                 <label asp-for="UnidadHerramientaId" class="control-label">Unidad de Herramienta</label>
-                <select asp-for="UnidadHerramientaId" class="form-control" asp-items="ViewBag.UnidadHerramientas"></select>
+                <select asp-for="UnidadHerramientaId" class="form-control" asp-items="ViewBag.UnidadHerramientas">
+                    <option value="" selected>Seleccionar Unidad de Herramienta</option>
+                </select>
                 <span asp-validation-for="UnidadHerramientaId" class="text-danger"></span>
             </div>
+
             <div class="form-group mb-3">
                 <label asp-for="UsuarioId" class="control-label">Usuario</label>
-                <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.Usuarios"></select>
+                <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.Usuarios">
+                    <option value="" selected>Seleccionar Usuario</option>
+                </select>
                 <span asp-validation-for="UsuarioId" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="FechaAsignacion" class="control-label">Fecha de Asignación</label>
-                <input asp-for="FechaAsignacion" class="form-control" />
+                <label asp-for="FechaAsignacion" class="control-label">Fecha y Hora de Asignación</label>
+                <input asp-for="FechaAsignacion" type="datetime-local" class="form-control interactive-field" placeholder="Seleccionar Fecha y Hora" />
                 <span asp-validation-for="FechaAsignacion" class="text-danger"></span>
             </div>
+
+            <style>
+                .interactive-field {
+                    cursor: pointer;
+                }
+
+                    .interactive-field::-webkit-calendar-picker-indicator {
+                        cursor: pointer;
+                    }
+            </style>
+
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-success" /> |
                 <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>

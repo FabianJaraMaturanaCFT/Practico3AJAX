@@ -28,6 +28,35 @@ namespace EVA3AJAX.Controllers
                           Problem("Entity set 'ProyectoDBContext.UnidadHerramientas'  is null.");
         }
 
+        public async Task<IActionResult> UnidadesPorHerramienta(int herramientaId)
+        {
+            var unidades = await _context.UnidadHerramientas.Where(u => u.HerramientaId == herramientaId).ToListAsync();
+            ViewData["ActivePage"] = "UnidadHerramientas";
+            return View(unidades);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CambiarEstado(int id, string nuevoEstado)
+        {
+            var unidad = await _context.UnidadHerramientas.FindAsync(id);
+            if (unidad == null)
+            {
+                return NotFound();
+            }
+
+            if (nuevoEstado != "Disponible" && nuevoEstado != "En Uso" && nuevoEstado != "En Mantención")
+            {
+                ModelState.AddModelError("", "El estado debe ser 'Disponible', 'En Uso' o 'En Mantención'.");
+                return View(unidad);
+            }
+
+            unidad.Estado = nuevoEstado;
+            _context.Update(unidad);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: UnidadHerramientas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -51,6 +80,7 @@ namespace EVA3AJAX.Controllers
         public IActionResult Create()
         {
             ViewData["ActivePage"] = "UnidadHerramientas";
+            ViewBag.Estados = new SelectList(new[] { "Disponible", "En Uso", "En Mantención" });
             ViewBag.Herramientas = new SelectList(_context.Herramientas, "Id", "Modelo");
             return View();
         }
@@ -68,6 +98,7 @@ namespace EVA3AJAX.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Estados = new SelectList(new[] { "Disponible", "En Uso", "En Mantención" });
             ViewBag.Herramientas = new SelectList(_context.Herramientas, "Id", "Modelo");
             return View(unidadHerramienta);
         }
@@ -86,6 +117,7 @@ namespace EVA3AJAX.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Estados = new SelectList(new[] { "Disponible", "En Uso", "En Mantención" });
             ViewBag.Herramientas = new SelectList(_context.Herramientas, "Id", "Modelo");
             return View(unidadHerramienta);
         }
@@ -149,16 +181,20 @@ namespace EVA3AJAX.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.UnidadHerramientas == null)
-            {
-                return Problem("Entity set 'ProyectoDBContext.UnidadHerramientas'  is null.");
-            }
             var unidadHerramienta = await _context.UnidadHerramientas.FindAsync(id);
-            if (unidadHerramienta != null)
+            if (unidadHerramienta == null)
             {
-                _context.UnidadHerramientas.Remove(unidadHerramienta);
+                return NotFound();
             }
-            
+
+            // Verificar estado
+            if (unidadHerramienta.Estado != "Disponible")
+            {
+                ModelState.AddModelError("", "No se puede eliminar la unidad porque está en uso o en mantención.");
+                return View(unidadHerramienta);
+            }
+
+            _context.UnidadHerramientas.Remove(unidadHerramienta);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

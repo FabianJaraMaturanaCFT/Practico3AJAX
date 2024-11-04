@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EVA3AJAX.Data;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace EVA3AJAX.Models
 {
@@ -23,6 +25,12 @@ namespace EVA3AJAX.Models
         public int Disponibles { get; set; }
 
         //public Marca Marca { get; set; }
-        //public ICollection<UnidadHerramienta> UnidadesHerramienta { get; set; }
+        //public ICollection<UnidadHerramienta> UnidadHerramientas { get; set; }
+
+        public async Task<List<UnidadHerramienta>> ObtenerUnidadHerramientasAsync(ProyectoDBContext context)
+        {
+            return await context.UnidadHerramientas.Where(u => u.HerramientaId == this.Id).ToListAsync();
+        }
+
     }
 }

@@ -20,16 +20,24 @@ namespace EVA3AJAX.Controllers
         }
 
         // GET: Herramientas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
             ViewData["ActivePage"] = "Herramientas";
-            return _context.Herramientas != null ? 
-                          View(await _context.Herramientas.ToListAsync()) :
-                          Problem("Entity set 'ProyectoDBContext.Herramientas'  is null.");
+            var herramientas = from h in _context.Herramientas
+                               select h;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                herramientas = herramientas.Where(h => h.Modelo.Contains(searchString));
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            return View(await herramientas.ToListAsync());
         }
 
-        // GET: Herramientas/Details/5
-        public async Task<IActionResult> Details(int? id)
+
+    // GET: Herramientas/Details/5
+    public async Task<IActionResult> Details(int? id)
         {
             ViewData["ActivePage"] = "Herramientas";
             if (id == null || _context.Herramientas == null)
@@ -62,6 +70,11 @@ namespace EVA3AJAX.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Modelo,IdMarca,CantidadTotal,Disponibles")] Herramienta herramienta)
         {
+            if (herramienta.Disponibles > herramienta.CantidadTotal)
+            {
+                ModelState.AddModelError("Disponibles", "El valor de 'Disponibles' no puede ser mayor que 'CantidadTotal'.");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(herramienta);
@@ -101,6 +114,11 @@ namespace EVA3AJAX.Controllers
             if (id != herramienta.Id)
             {
                 return NotFound();
+            }
+
+            if (herramienta.Disponibles > herramienta.CantidadTotal)
+            {
+                ModelState.AddModelError("Disponibles", "El valor de 'Disponibles' no puede ser mayor que 'CantidadTotal'.");
             }
 
             if (ModelState.IsValid)
@@ -150,18 +168,24 @@ namespace EVA3AJAX.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Herramientas == null)
+            var herramienta = await _context.Herramientas.FirstOrDefaultAsync(h => h.Id == id);
+            if (herramienta == null)
             {
-                return Problem("Entity set 'ProyectoDBContext.Herramientas'  is null.");
+                return NotFound();
             }
-            var herramienta = await _context.Herramientas.FindAsync(id);
-            if (herramienta != null)
-            {
-                _context.Herramientas.Remove(herramienta);
-            }
+
             
+            var unidadHerramientas = await _context.UnidadHerramientas.Where(u => u.HerramientaId == herramienta.Id).ToListAsync();
+            if (unidadHerramientas.Any())
+            {
+                ModelState.AddModelError("", "No se puede eliminar la herramienta porque tiene unidades asociadas.");
+                return View(herramienta);
+            }
+
+            _context.Herramientas.Remove(herramienta);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+
         }
 
         private bool HerramientaExists(int id)

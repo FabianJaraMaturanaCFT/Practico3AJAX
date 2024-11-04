@@ -14,15 +14,16 @@ namespace EVA3AJAX.Models
         public string NumeroSerie { get; set; }
 
         [Required(ErrorMessage = "El estado es requerido.")]
-        public string Estado { get; set; } // 'Disponible', 'En Uso', 'En Mantención'
+        [RegularExpression("^(Disponible|En Uso|En Mantención)$", ErrorMessage = "El estado debe ser 'Disponible', 'En Uso' o 'En Mantención'.")]
+        public string Estado { get; set; }
 
-        [Required(ErrorMessage = "La marca asociada es requerida.")]
+        [Required(ErrorMessage = "La herramienta asociada es requerida.")]
         [ForeignKey("Herramienta")]
         public int HerramientaId { get; set; }
 
-        /*public virtual Herramienta Herramienta { get; private set; }
+        //public virtual Herramienta Herramienta { get; private set; }
 
-        public void SetHerramienta(Herramienta herramienta)
+        /*public void SetHerramienta(Herramienta herramienta)
         {
             Herramienta = herramienta;
         }*/

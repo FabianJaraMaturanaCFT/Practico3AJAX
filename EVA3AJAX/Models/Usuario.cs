@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EVA3AJAX.Data;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace EVA3AJAX.Models
 {
@@ -21,5 +23,11 @@ namespace EVA3AJAX.Models
         public string Telefono { get; set; }
 
         //public ICollection<AsignacionHerramienta> AsignacionHerramientas { get; set; }
+
+        public async Task<int> HerramientasEnUso(ProyectoDBContext context)
+        {
+            return await context.AsignacionHerramientas.CountAsync(a => a.UsuarioId == this.Id);
+        }
     }
 }
+

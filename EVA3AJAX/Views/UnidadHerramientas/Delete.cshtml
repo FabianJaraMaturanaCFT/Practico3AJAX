@@ -7,6 +7,17 @@
 <div class="card mb-4">
     <div class="card-body">
         <h4>Unidad de Herramienta</h4>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            </div>
+        }
+
         <hr />
         <dl class="row">
             <dt class="col-sm-2">Número de Serie</dt>
