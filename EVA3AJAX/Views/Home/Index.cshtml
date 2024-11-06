@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="hero">
+<div class="hero-content">
     <div class="text-center">
         <h1 class="display-4 text-light" style="text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);">Bienvenido a la Bodega de Gestión de Herramientas</h1>
         <p class="lead text-light" style="text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);">Aprende sobre <a href="https://docs.microsoft.com/aspnet/core" class="text-warning font-weight-bold">desarrollo de aplicaciones web con ASP.NET Core</a>.</p>
@@ -11,37 +11,41 @@
 </div>
 
 <style>
-    .hero {
+    
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
         background-image: url('@Url.Content("~/images/Inicio.jpg")');
         background-size: cover;
-        background-position: top center;
-        height: calc(100vh);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-        position: relative;
-        margin-bottom: 60px; 
+        background-repeat: no-repeat; 
+        background-position: center; 
+        height: 100vh; 
+        overflow: hidden; 
+        position: relative; 
     }
 
-        .hero::before {
+        body::before {
             content: '';
             position: absolute;
-            top: 0;
+            top: 76px;
             left: 0;
             right: 0;
-            bottom: 0;
+            bottom: 92px;
             background: rgba(0, 0, 0, 0.5);
             z-index: 1;
         }
 
-        .hero > div {
-            position: relative;
-            z-index: 2;
-        }
+    .hero-content {
+        position: relative;
+        z-index: 2; 
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        padding: 40px 20px; 
+    }
 
     .text-warning {
         color: #FFC107;
     }
 </style>
+
+

@@ -2,27 +2,150 @@
 @{
     ViewData["Title"] = "Módulo de Asignaciones";
 }
-<h1 class="text-primary">Módulo de Asignaciones</h1>
-<p>
-    <a asp-action="Create" class="btn btn-info mb-3">Nueva Asignación</a>
 
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div id="successMessage" class="alert alert-success">
-            @TempData["SuccessMessage"]
-        </div>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
 
-        <script>
-            setTimeout(function() {
-                var msg = document.getElementById('successMessage');
-                if (msg) {
-                    msg.style.display = 'none';
-                }
-            }, 5000);
-        </script>
+<div class="styled-title-container">
+    <h1 class="styled-title">
+        <i class="fas fa-tasks" style="color: #ffc107; margin-right: 10px;"></i>
+        Módulo de Asignaciones
+    </h1>
+</div>
+
+<style>
+    .styled-title-container {
+        display: flex;
+        justify-content: center;
     }
-</p>
-<div class="table-responsive">
+
+    .styled-title {
+        font-family: 'Arial', sans-serif;
+        font-size: 2.5em;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        padding: 10px;
+        border-bottom: 3px solid #ffc107;
+        display: inline-block;
+        background: linear-gradient(90deg, #002244, #0055a5);
+        width: 100%;
+        max-width: 960px;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    .search-box {
+        background-color: #004080;
+        padding: 8px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 15px;
+        max-width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 15px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #002244;
+        color: #b5b5b5;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+        .table thead {
+            background-color: #0055a5; 
+            color: #ffc107;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            border: none;
+            text-align: left;
+        }
+
+        .table th {
+            text-align: center;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.2s ease-in-out;
+        }
+
+            .table tbody tr:hover {
+                background-color: #003366;
+            }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #002244; 
+            }
+
+        .table .btn {
+            margin: 2px;
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        .table .btn-warning {
+            background-color: #ffc107;
+            border: none;
+            color: #000;
+        }
+
+        .table .btn-info {
+            background-color: #17a2b8;
+            border: none;
+            color: #fff;
+        }
+
+        .table .btn-danger {
+            background-color: #dc3545;
+            border: none;
+            color: #fff;
+        }
+
+        .table .btn:hover {
+            transform: scale(1.05);
+        }
+
+</style>
+
+<div class="button-container">
+    <a asp-action="Create" class="btn btn-info mb-3">Nueva Asignación</a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successMessage" class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+
+    <script>
+        setTimeout(function () {
+            var msg = document.getElementById('successMessage');
+            if (msg) {
+                msg.style.display = 'none';
+            }
+        }, 5000);
+    </script>
+}
+
+<div class="table-responsive" style="max-width: 960px; margin: 0 auto; margin-bottom: 25px;">
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
             <tr>

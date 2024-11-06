@@ -20,12 +20,20 @@ namespace EVA3AJAX.Controllers
         }
 
         // GET: UnidadHerramientas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
             ViewData["ActivePage"] = "UnidadHerramientas";
-            return _context.UnidadHerramientas != null ? 
-                          View(await _context.UnidadHerramientas.ToListAsync()) :
-                          Problem("Entity set 'ProyectoDBContext.UnidadHerramientas'  is null.");
+            var unidadHerramientas = from m in _context.UnidadHerramientas
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                unidadHerramientas = unidadHerramientas.Where(m => m.NumeroSerie.Contains(searchString));
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            return View(await unidadHerramientas.ToListAsync());
+
         }
 
         public async Task<IActionResult> UnidadesPorHerramienta(int herramientaId)

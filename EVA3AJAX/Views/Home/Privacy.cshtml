@@ -1,6 +1,109 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        h1 {
+            text-align: left;
+            color: #002244;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: #0055a5;
+            font-size: 1.5em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #0055a5;
+            padding-bottom: 5px;
+        }
+
+        .content {
+            line-height: 1.6;
+        }
+
+        .icon {
+            color: #0055a5;
+            margin-right: 10px;
+        }
+
+        .btn {
+            background-color: #0055a5;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 10px 0;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #002244;
+        }
+    </style>
+</head>
+
+<style>
+    .title-container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        background-color: #0055a5;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        margin-bottom: 25px;
+        display: inline-block;
+        transition: background-color 0.3s;
+    }
+        .btn:hover {
+            background-color: #003366;
+        }
+</style>
+
+<div class="container">
+    <div class="title-container">
+        <h1><i class="fas fa-user-secret icon"></i>@ViewData["Title"]</h1>
+    </div>
+    <p class="content">Utilice esta página para detallar la política de privacidad de su sitio.</p>
+
+    <div class="section">
+        <h2 class="section-title"><i class="fas fa-info-circle icon"></i>Información Recolectada</h2>
+        <p class="content">Describa aquí la información que su sitio recopila de los usuarios.</p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title"><i class="fas fa-shield-alt icon"></i>Uso de la Información</h2>
+        <p class="content">Explique cómo utiliza la información recopilada.</p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title"><i class="fas fa-lock icon"></i>Protección de la Información</h2>
+        <p class="content">Describa las medidas que toma para proteger la información del usuario.</p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title"><i class="fas fa-user-check icon"></i>Derechos del Usuario</h2>
+        <p class="content">Detalle los derechos que tienen los usuarios sobre su información.</p>
+    </div>
+
+    <a href="#" class="btn">Más Información</a>
+</div>
+
