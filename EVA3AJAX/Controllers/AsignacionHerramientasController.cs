@@ -81,8 +81,16 @@ namespace EVA3AJAX.Controllers
 
             if (ModelState.IsValid)
             {
+                // Asignación de la herramienta
                 _context.Add(asignacionHerramienta);
+
+                // Actualizar el estado de la unidad de herramienta a "En Uso"
+                unidad.Estado = "En Uso";
+                _context.Update(unidad); // Actualizar el estado de la unidad en la base de datos
+
+                // Guardar los cambios en la base de datos
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -163,8 +171,19 @@ namespace EVA3AJAX.Controllers
                 return NotFound();
             }
 
+            var unidad = await _context.UnidadHerramientas
+                .FirstOrDefaultAsync(u => u.Id == asignacionHerramienta.UnidadHerramientaId);
+
+            
+            if (unidad != null && (unidad.Estado == "En Uso" || unidad.Estado == "En Mantención"))
+            {
+                TempData["ErrorMessage"] = "No se puede eliminar esta asignación porque la herramienta está en uso o en mantención.";
+                return RedirectToAction(nameof(Index));
+            }
+
             return View(asignacionHerramienta);
         }
+
 
 
         [HttpPost]
@@ -198,7 +217,6 @@ namespace EVA3AJAX.Controllers
             
             return RedirectToAction(nameof(Index));
         }
-
 
         // POST: AsignacionHerramientas/Delete/5
         [HttpPost, ActionName("Delete")]
