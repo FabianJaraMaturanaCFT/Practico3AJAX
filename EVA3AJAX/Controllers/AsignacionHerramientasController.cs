@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EVA3AJAX.Data;
@@ -27,7 +23,6 @@ namespace EVA3AJAX.Controllers
                 View(await _context.AsignacionHerramientas.ToListAsync()) :
                 Problem("Entity set 'ProyectoDBContext.AsignacionHerramientas' is null.");
         }
-
 
         // GET: AsignacionHerramientas/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -58,8 +53,6 @@ namespace EVA3AJAX.Controllers
         }
 
         // POST: AsignacionHerramientas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UnidadHerramientaId,UsuarioId,FechaAsignacion")] AsignacionHerramienta asignacionHerramienta)
@@ -72,25 +65,26 @@ namespace EVA3AJAX.Controllers
                 ModelState.AddModelError("", "La herramienta debe estar disponible para asignarse.");
             }
 
-            
             var herramientasEnUso = await usuario.HerramientasEnUso(_context);
             if (herramientasEnUso >= 3)
             {
                 ModelState.AddModelError("", "Un usuario no puede tener más de 3 herramientas asignadas.");
             }
 
+            if (asignacionHerramienta.FechaAsignacion > DateTime.Now)
+            {
+                ModelState.AddModelError("FechaAsignacion", "La fecha de asignación no puede ser en el futuro.");
+            }
+
             if (ModelState.IsValid)
             {
-                // Asignación de la herramienta
-                _context.Add(asignacionHerramienta);
+                asignacionHerramienta.FechaAsignacion = DateTime.Now;
 
-                // Actualizar el estado de la unidad de herramienta a "En Uso"
                 unidad.Estado = "En Uso";
-                _context.Update(unidad); // Actualizar el estado de la unidad en la base de datos
+                _context.Update(unidad);
 
-                // Guardar los cambios en la base de datos
+                _context.Add(asignacionHerramienta);
                 await _context.SaveChangesAsync();
-
                 return RedirectToAction(nameof(Index));
             }
 
@@ -98,8 +92,6 @@ namespace EVA3AJAX.Controllers
             ViewBag.Usuarios = new SelectList(_context.Usuarios, "Id", "Nombre");
             return View(asignacionHerramienta);
         }
-
-
 
         // GET: AsignacionHerramientas/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -115,25 +107,46 @@ namespace EVA3AJAX.Controllers
             {
                 return NotFound();
             }
+
+            var unidadHerramienta = _context.UnidadHerramientas
+                .FirstOrDefault(u => u.Id == asignacionHerramienta.UnidadHerramientaId);
+
+            
+            ViewBag.SelectedUnidadHerramienta = unidadHerramienta?.NumeroSerie;
+
             ViewBag.UnidadHerramientas = new SelectList(_context.UnidadHerramientas, "Id", "NumeroSerie");
             ViewBag.Usuarios = new SelectList(_context.Usuarios, "Id", "Nombre");
             return View(asignacionHerramienta);
         }
 
-        // POST: AsignacionHerramientas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UnidadHerramientaId,UsuarioId,FechaAsignacion")] AsignacionHerramienta asignacionHerramienta)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UnidadHerramientaId,UsuarioId,FechaRetorno")] AsignacionHerramienta modeloEditado)
         {
-            if (id != asignacionHerramienta.Id)
+            var asignacionHerramienta = await _context.AsignacionHerramientas.FindAsync(id);
+
+            if (asignacionHerramienta == null)
             {
                 return NotFound();
+            }
+            if (modeloEditado.FechaRetorno < asignacionHerramienta.FechaAsignacion)
+            {
+                ModelState.AddModelError("FechaRetorno", "La Fecha de Retorno no puede ser antes de la Fecha de Asignación.");
+
+                ViewBag.SelectedUnidadHerramienta = asignacionHerramienta.UnidadHerramientaId;
+                ViewBag.SelectedUsuario = asignacionHerramienta.UsuarioId;
+                ViewBag.UnidadHerramientas = new SelectList(_context.UnidadHerramientas, "Id", "NumeroSerie", asignacionHerramienta.UnidadHerramientaId);
+                ViewBag.Usuarios = new SelectList(_context.Usuarios, "Id", "Nombre", asignacionHerramienta.UsuarioId);
+
+                return View(modeloEditado);
             }
 
             if (ModelState.IsValid)
             {
+                asignacionHerramienta.UsuarioId = modeloEditado.UsuarioId;
+                asignacionHerramienta.FechaRetorno = modeloEditado.FechaRetorno;
+
                 try
                 {
                     _context.Update(asignacionHerramienta);
@@ -152,8 +165,14 @@ namespace EVA3AJAX.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(asignacionHerramienta);
+
+            
+            ViewBag.UnidadHerramientas = new SelectList(_context.UnidadHerramientas, "Id", "NumeroSerie", modeloEditado.UnidadHerramientaId);
+            ViewBag.Usuarios = new SelectList(_context.Usuarios, "Id", "Nombre", modeloEditado.UsuarioId);
+
+            return View(modeloEditado);
         }
+
 
         // GET: AsignacionHerramientas/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -174,7 +193,6 @@ namespace EVA3AJAX.Controllers
             var unidad = await _context.UnidadHerramientas
                 .FirstOrDefaultAsync(u => u.Id == asignacionHerramienta.UnidadHerramientaId);
 
-            
             if (unidad != null && (unidad.Estado == "En Uso" || unidad.Estado == "En Mantención"))
             {
                 TempData["ErrorMessage"] = "No se puede eliminar esta asignación porque la herramienta está en uso o en mantención.";
@@ -184,62 +202,78 @@ namespace EVA3AJAX.Controllers
             return View(asignacionHerramienta);
         }
 
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Devolver(int id)
-        {
-            
-            var asignacion = await _context.AsignacionHerramientas.FindAsync(id);
-            if (asignacion == null)
-            {
-                return NotFound();
-            }
-
-            
-            var unidad = await _context.UnidadHerramientas.FindAsync(asignacion.UnidadHerramientaId);
-            if (unidad != null)
-            {
-                
-                unidad.Estado = "Disponible";
-                _context.Update(unidad);
-            }
-
-            
-            _context.AsignacionHerramientas.Remove(asignacion);
-
-            
-            await _context.SaveChangesAsync();
-
-            TempData["SuccessMessage"] = "La herramienta ha sido devuelta exitosamente.";
-
-            
-            return RedirectToAction(nameof(Index));
-        }
-
-        // POST: AsignacionHerramientas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.AsignacionHerramientas == null)
             {
-                return Problem("Entity set 'ProyectoDBContext.AsignacionHerramientas'  is null.");
+                return Problem("Entity set 'ProyectoDBContext.AsignacionHerramientas' is null.");
             }
             var asignacionHerramienta = await _context.AsignacionHerramientas.FindAsync(id);
             if (asignacionHerramienta != null)
             {
                 _context.AsignacionHerramientas.Remove(asignacionHerramienta);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
+   
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Devolver(int id)
+        {
+            var asignacion = await _context.AsignacionHerramientas.FindAsync(id);
+            if (asignacion == null)
+            {
+                return NotFound();
+            }
+
+            var unidad = await _context.UnidadHerramientas.FindAsync(asignacion.UnidadHerramientaId);
+            if (unidad != null)
+            {
+                asignacion.FechaRetorno = DateTime.Now; 
+
+                unidad.Estado = "Disponible";
+                _context.Update(unidad);
+
+                _context.AsignacionHerramientas.Remove(asignacion);
+            }
+
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "La herramienta ha sido devuelta exitosamente.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> VerificarDisponibilidad(int unidadHerramientaId)
+        {
+            var unidad = await _context.UnidadHerramientas
+                .FirstOrDefaultAsync(u => u.Id == unidadHerramientaId);
+
+            if (unidad == null)
+            {
+                return Json(new { success = false, message = "Unidad de herramienta no encontrada." });
+            }
+
+            if (unidad.Estado == "Disponible")
+            {
+                return Json(new { success = true, message = "La herramienta está disponible." });
+            }
+            else
+            {
+                return Json(new { success = false, message = "La herramienta no está disponible." });
+            }
+        }
+
         private bool AsignacionHerramientaExists(int id)
         {
-          return (_context.AsignacionHerramientas?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.AsignacionHerramientas?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
+

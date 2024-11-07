@@ -21,12 +21,6 @@ namespace EVA3AJAX.Models
         [ForeignKey("Herramienta")]
         public int HerramientaId { get; set; }
 
-        //public DateTime FechaAsignacion { get; set; }
-        
-        //public DateTime FechaRetorno { get; set; }
-
-
-
         //public virtual Herramienta Herramienta { get; private set; }
 
         /*public void SetHerramienta(Herramienta herramienta)

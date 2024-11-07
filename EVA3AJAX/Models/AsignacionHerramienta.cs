@@ -11,7 +11,7 @@ namespace EVA3AJAX.Models
         [Required(ErrorMessage = "La unidad de herramienta es requerida.")]
         [ForeignKey("UnidadHerramienta")]
         public int UnidadHerramientaId { get; set; }
-        //public UnidadHerramienta UnidadHerramienta { get; set; }
+        //public virtual UnidadHerramienta UnidadHerramienta { get; set; }
 
         [Required(ErrorMessage = "El usuario es requerido.")]
         [ForeignKey("Usuario")]
@@ -20,7 +20,7 @@ namespace EVA3AJAX.Models
 
         [Required(ErrorMessage = "La fecha de asignación es requerida.")]
         public DateTime FechaAsignacion { get; set; }
-
+        public DateTime FechaRetorno { get; set; }
 
         //public ICollection<UnidadHerramienta> UnidadHerramientas { get; set; }
 

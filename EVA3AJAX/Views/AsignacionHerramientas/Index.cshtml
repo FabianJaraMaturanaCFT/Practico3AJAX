@@ -14,6 +14,13 @@
     </h1>
 </div>
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 <style>
     .styled-title-container {
         display: flex;
@@ -68,7 +75,7 @@
     }
 
         .table thead {
-            background-color: #0055a5; 
+            background-color: #0055a5;
             color: #ffc107;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -93,7 +100,7 @@
             }
 
             .table tbody tr:nth-child(even) {
-                background-color: #002244; 
+                background-color: #002244;
             }
 
         .table .btn {
@@ -121,6 +128,11 @@
 
         .table .btn:hover {
             transform: scale(1.05);
+        }
+
+        .table th:last-child, .table td:last-child {
+            width: 325px;
+            text-align: center;
         }
 
 </style>
@@ -152,6 +164,7 @@
                 <th>Unidad Herramienta</th>
                 <th>ID del Usuario</th>
                 <th>Fecha de Asignación</th>
+                <th>Fecha de Retorno</th>
                 <th style="text-align: center;">Acciones</th>
             </tr>
         </thead>
@@ -162,6 +175,7 @@
                     <td>@Html.DisplayFor(modelItem => item.UnidadHerramientaId)</td>
                     <td>@Html.DisplayFor(modelItem => item.UsuarioId)</td>
                     <td>@Html.DisplayFor(modelItem => item.FechaAsignacion)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FechaRetorno)</td>
                     <td style="text-align: center;">
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a> |
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a> |
@@ -172,4 +186,3 @@
         </tbody>
     </table>
 </div>
-

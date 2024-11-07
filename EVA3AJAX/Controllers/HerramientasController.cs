@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EVA3AJAX.Data;
@@ -19,7 +15,6 @@ namespace EVA3AJAX.Controllers
             _context = context;
         }
 
-        // GET: Herramientas
         public async Task<IActionResult> Index(string searchString)
         {
             ViewData["ActivePage"] = "Herramientas";
@@ -31,13 +26,18 @@ namespace EVA3AJAX.Controllers
                 herramientas = herramientas.Where(h => h.Modelo.Contains(searchString));
             }
 
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("_HerramientasList", await herramientas.ToListAsync());
+            }
+
             ViewData["CurrentFilter"] = searchString;
             return View(await herramientas.ToListAsync());
         }
 
 
-    // GET: Herramientas/Details/5
-    public async Task<IActionResult> Details(int? id)
+        // GET: Herramientas/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             ViewData["ActivePage"] = "Herramientas";
             if (id == null || _context.Herramientas == null)

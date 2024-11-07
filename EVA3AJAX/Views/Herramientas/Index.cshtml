@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<EVA3AJAX.Models.Herramienta>
+
 @{
     ViewData["Title"] = "Módulo de Herramientas";
 }
@@ -13,6 +14,7 @@
         Módulo de Herramientas
     </h1>
 </div>
+
 
 <style>
     .styled-title-container {
@@ -96,6 +98,7 @@
             .table tbody tr:nth-child(even) {
                 background-color: #002244; 
 
+
         .table .btn {
             margin: 2px;
             transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
@@ -130,9 +133,9 @@
 </div>
 
 <div class="search-box">
-    <form method="get">
+    <form id="searchForm" method="get">
         <div class="input-group">
-            <input type="text" name="searchString" class="form-control" placeholder="Buscar por modelo..." value="@ViewData["CurrentFilter"]" />
+            <input type="text" id="searchString" name="searchString" class="form-control" placeholder="Buscar por modelo..." value="@ViewData["CurrentFilter"]" />
             <div class="input-group-append">
                 <button class="btn btn-outline-light" type="submit">Buscar</button>
             </div>
@@ -151,7 +154,7 @@
                 <th style="text-align: center;">Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="herramientasList">
             @foreach (var item in Model)
             {
                 <tr>
@@ -169,4 +172,29 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchString').on('input', function () {
+                var searchString = $(this).val();  
+
+
+                $.ajax({
+                    url: '@Url.Action("Index", "Herramientas")',  
+                    data: { searchString: searchString },  
+                    type: 'GET',
+                    success: function (response) {
+                        
+                        $('#herramientasList').html($(response).find('#herramientasList').html());
+                    },
+                    error: function () {
+                        alert('Error al realizar la búsqueda.');
+                    }
+                });
+            });
+        });
+    </script>
+}
 

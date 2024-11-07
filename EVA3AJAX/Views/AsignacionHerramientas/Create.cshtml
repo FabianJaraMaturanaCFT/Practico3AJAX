@@ -5,6 +5,12 @@
 <h1 class="text-primary">Crear Nueva Asignación</h1>
 <h4>Detalles de la Asignación</h4>
 <hr />
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <div class="card mb-4">
     <div class="card-body">
         <form asp-action="Create">
@@ -28,6 +34,11 @@
                 <input asp-for="FechaAsignacion" type="datetime-local" class="form-control interactive-field" placeholder="Seleccionar Fecha y Hora" />
                 <span asp-validation-for="FechaAsignacion" class="text-danger"></span>
             </div>
+            <div class="form-group mb-3">
+                <label asp-for="FechaRetorno" class="control-label">Fecha y Hora de Retorno</label>
+                <input asp-for="FechaRetorno" type="datetime-local" class="form-control interactive-field" placeholder="Seleccionar Fecha y Hora de Retorno" />
+                <span asp-validation-for="FechaRetorno" class="text-danger"></span>
+            </div>
 
             <style>
                 .interactive-field {
@@ -40,9 +51,51 @@
             </style>
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-success" /> |
-                <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a>
+                <a asp-action="Index" class="btn btn-secondary">Volver a la Lista</a> |
+                <button type="button" id="verificarDisponibilidadBtn" class="btn btn-primary">Verificar Disponibilidad</button>
+                <div id="disponibilidadMensaje"></div>
             </div>
         </form>
+        <script>
+            $(document).ready(function () {
+                $("#verificarDisponibilidadBtn").click(function () {
+                    var unidadId = $("#UnidadHerramientaId").val(); 
+
+                    if (unidadId) {
+                        $.ajax({
+                            url: '@Url.Action("VerificarDisponibilidad", "AsignacionHerramientas")',
+                            type: 'POST',
+                            data: { unidadHerramientaId: unidadId },
+                            success: function (response) {
+                                if (response.success) {
+                                    $('#disponibilidadMensaje').html('<span class="text-success">' + response.message + '</span>');
+                                } else {
+                                    $('#disponibilidadMensaje').html('<span class="text-danger">' + response.message + '</span>');
+                                }
+                            },
+                            error: function () {
+                                $('#disponibilidadMensaje').html('<span class="text-danger">Ocurrió un error al verificar la disponibilidad.</span>');
+                            }
+                        });
+                    } else {
+                        $('#disponibilidadMensaje').html('<span class="text-warning">Por favor, seleccione una herramienta.</span>');
+                    }
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                $("form").submit(function (event) {
+                    var fechaAsignacion = new Date($("#FechaAsignacion").val());
+                    var fechaRetorno = new Date($("#FechaRetorno").val());
+
+                    if (fechaRetorno < fechaAsignacion) {
+                        event.preventDefault();
+                        alert("La fecha de retorno debe ser posterior a la fecha de asignación.");
+                    }
+                });
+            });
+        </script>
     </div>
 </div>
 @section Scripts {
